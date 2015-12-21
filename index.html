@@ -7,14 +7,16 @@
         <meta charset="utf-8">
         <script type="text/javascript" src="btree.js"></script>
         <script type="text/javascript" src="btreeNode.js"></script>
+        <link type="text/css" rel="stylesheet" href="stylesheet.css"/>
 
     </head>
 
     <body>  
 
+    <canvas id="mycanvas" style="border: 1px solid black;" width="100" height="100"></canvas>
+
     <script>
         var btree = new B_TREE(2);
-<<<<<<< HEAD
         btree.insert(1);
         btree.insert(2);
         btree.insert(3);
@@ -22,16 +24,55 @@
         btree.insert(5);
         btree.insert(6);
         btree.insert(7);
-=======
-
-        btree.insert(5);
-        btree.insert(9);
-        btree.insert(3);
-        // btree.insert(7);
-        // btree.insert(1);
 
 
->>>>>>> origin/master
+        var canvas = document.getElementById("mycanvas");
+        var context = canvas.getContext('2d');
+
+        /* Determine RECT_WIDTH for nodes */
+        var SITE_WIDTH = window.innerWidth;
+        var SITE_HEIGHT = window.innerHeight;
+        var RECT_WIDTH_PERCENT = 15;
+        var RECT_WIDTH = SITE_WIDTH * (RECT_WIDTH_PERCENT/100);
+        var RECT_HEIGHT = RECT_WIDTH * (1/3);
+
+        /* Set the canvas size */
+        context.canvas.width = window.innerWidth;
+        context.canvas.height = window.innerHeight;
+
+        var RECT_X = SITE_WIDTH/2 - RECT_WIDTH/2;
+        context.rect(RECT_X, RECT_HEIGHT, RECT_WIDTH, RECT_HEIGHT);
+        context.stroke();
+
+        var NUM_KEYS = 3;
+        var KEY_SPACING = RECT_WIDTH/NUM_KEYS;
+
+        var loc = KEY_SPACING + RECT_X;
+        for (var i = 0; i < NUM_KEYS-1; i++) {
+            context.beginPath();
+            context.moveTo(loc, RECT_HEIGHT);
+            context.lineTo(loc, RECT_HEIGHT+RECT_HEIGHT);
+            context.stroke();
+            loc += KEY_SPACING;
+        };
+
+        var CHILD_LENGTH = 5;
+
+        /* Draw children */
+        var CHILD_SPACING = RECT_X/(CHILD_LENGTH*CHILD_LENGTH);
+        var MULT = (CHILD_LENGTH-1)/2;
+
+        var leftMost = RECT_X - MULT * (RECT_WIDTH + CHILD_SPACING);
+        var Y = RECT_HEIGHT * btree.height * 1.5;
+
+        for (var i = 0; i < CHILD_LENGTH; i++) {
+            context.rect(leftMost, Y, RECT_WIDTH, RECT_HEIGHT);
+            context.stroke();
+            leftMost += CHILD_SPACING + (RECT_WIDTH);
+        };
+
+
+
 
     </script>
 

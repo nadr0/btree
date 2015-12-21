@@ -22,6 +22,10 @@ function B_TREE(t){
 	this.t = t;
 	// Root node
 	this.root = null;
+
+
+	// Keep track of the height
+	this.height = 0;
 }
 
 /*
@@ -29,7 +33,6 @@ function B_TREE(t){
 	Args:
 		value: the number to be inserted
 */
-<<<<<<< HEAD
 B_TREE.prototype.insert = function(k){
 
 	if(this.root === null){
@@ -38,6 +41,7 @@ B_TREE.prototype.insert = function(k){
 		/* Insert the key */
 		this.root.keys[0] = k;
 		this.root.numkeys = 1;
+		this.height = 1;
 
 	}else{
 		/* The tree is not empty */
@@ -65,6 +69,9 @@ B_TREE.prototype.insert = function(k){
 			/* Set the new root */
 			this.root = newNode;
 
+			/* Increase the height of the tree */
+			this.height++;
+
 		}else{
 			/* If the root is not full */
 			this.root.insertNonFull(k);
@@ -72,10 +79,6 @@ B_TREE.prototype.insert = function(k){
 
 
 	}
-
-=======
-B_TREE.prototype.insert = function(value){
->>>>>>> origin/master
 }
 
 /*
