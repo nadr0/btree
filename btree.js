@@ -24,27 +24,12 @@ function B_TREE(t){
 	this.root = null;
 }
 
-
 /*
-	B-TREE constructor
-*/ 
-B_TREE.prototype.init = function(){
-
-}
-
-/* 
-	Search
-*/
-B_TREE.prototype.search = function(){
-
-}
-
-
-/* 
 	Insertion
 	Args:
 		value: the number to be inserted
 */
+<<<<<<< HEAD
 B_TREE.prototype.insert = function(k){
 
 	if(this.root === null){
@@ -88,6 +73,9 @@ B_TREE.prototype.insert = function(k){
 
 	}
 
+=======
+B_TREE.prototype.insert = function(value){
+>>>>>>> origin/master
 }
 
 /*

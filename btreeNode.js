@@ -5,6 +5,7 @@
 	B_TREE_NODE
 */
 
+<<<<<<< HEAD
 function B_TREE_NODE(t,leaf){
 
 	/* An array of keys */
@@ -105,3 +106,21 @@ B_TREE_NODE.prototype.splitChild = function(i, y){
 }
 
 
+=======
+function B_TREE_NODE(m,leaf){
+	/* An array of keys */
+	this.keys = [];
+	
+	/* Current number of keys */
+	this.numberOfKeys = 0;
+
+	/* Am I a leaf */
+	this.leaf = leaf;
+
+	/* Determines max keys */
+	this.m = m;
+
+	/* Child nodes */
+	this.children = [];
+}
+>>>>>>> origin/master
