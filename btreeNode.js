@@ -1,40 +1,107 @@
 /*
 	CS 225 APPLET B-TREE 
+
+
+	B_TREE_NODE
 */
 
-function B_TREE_NODE(){
+function B_TREE_NODE(t,leaf){
+
 	/* An array of keys */
 	this.keys = [];
+
 	/* Current number of keys */
-	this.numberOfKeys = 0;
+	this.numkeys = 0;
+
 	/* Am I a leaf */
-	this.leaf = 0;
+	this.leaf = leaf;
 
 	/* Max keys */
-	this.order = 0;
-}
+	this.t = t;
 
-
-/*
-	Constructor
-*/
-B_TREE_NODE.prototype.init = function(){
+	/* Children */
+	this.C = [];
 
 }
 
 
-/*
-	Insert
-		Inserts the value into the keys array, in order
+B_TREE_NODE.prototype.insertNonFull = function(k){
 
-	Call .sort(function(a,b){return a-b}); for now on keys
-*/
-B_TREE_NODE.prototype.insert = function(value){
-	/* Insert value into the array */
-	this.keys.push(value);
-	/* Sort the keys */
-	this.keys.sort(function(a,b){return a-b});
+	/* Get the right most index */
+	var i = this.numkeys - 1;
 
-	/* Increment the number of keys */
-	this.numberOfKeys++;
+
+	/* Check for leaf node */
+	if(this.leaf === true){
+
+		while(i >= 0 && this.keys[i] > k){
+			this.keys[i+1] = this.keys[i];
+			i--;
+		}
+
+		/* Insert the key at the found location */
+		this.keys[i+1] = k;
+		/* increment the number of keys its storing */
+		this.numkeys++;
+
+	}else{/*This node is not a leaf */
+
+		while(i >= 0 && this.keys[i] > k){
+			i--;
+		}
+
+		/* If the child is full then split */
+		if(this.C[i+1].numkeys === 2*this.t - 1){
+
+			this.splitChild(i+1, this.C[i+1]);
+
+			if(this.keys[i+1] < k){
+				i++;
+			}
+
+		}
+		this.C[i+1].insertNonFull(k);
+	}
+
 }
+
+
+
+B_TREE_NODE.prototype.splitChild = function(i, y){
+
+	var z = new B_TREE_NODE(y.t, y.leaf);
+	z.numkeys = this.t - 1;
+
+	for(var j = 0; j < this.t - 1; j++){
+		z.keys[j] = y.keys[j+this.t];
+		y.keys.splice(j+this.t,1);
+
+	}
+
+	if(y.leaf === false){
+		for(var j = 0; j < this.t; j++){
+			z.C[j] = y.C[j+this.t];
+			y.keys.splice(j+this.i,1);
+		}
+	}
+
+	y.numkeys = this.t - 1;
+
+	for(var j = this.numkeys; j >= i + 1; j--){
+		this.C[j+1] = this.C[j];
+	}
+
+	this.C[i+1] = z;
+
+	for(var j = this.numkeys - 1; j >= i; j--){
+		this.keys[j+1] = this.keys[j];
+	}
+
+	this.keys[i] = y.keys[this.t-1];
+	y.keys.splice(this.t-1,1);
+
+	this.numkeys = this.numkeys + 1;
+
+}
+
+
