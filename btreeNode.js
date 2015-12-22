@@ -81,9 +81,16 @@ B_TREE_NODE.prototype.splitChild = function(i, y){
 	if(y.leaf === false){
 		for(var j = 0; j < this.t; j++){
 			z.C[j] = y.C[j+this.t];
-			y.keys.splice(j+this.i,1);
 		}
+		
+		for(var j = y.C.length-1; j >= this.t; j--){
+			y.C.splice(j,1);
+		}
+
 	}
+
+
+
 
 	y.numkeys = this.t - 1;
 
@@ -101,7 +108,14 @@ B_TREE_NODE.prototype.splitChild = function(i, y){
 	y.keys.splice(this.t-1,1);
 
 	this.numkeys = this.numkeys + 1;
-
 }
 
 
+B_TREE_NODE.prototype.traverse = function(){
+	var i;
+    for (i = 0; i < this.C.length; i++)
+    {
+        if (this.leaf === false)
+            this.C[i].traverse();
+    }
+}

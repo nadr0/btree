@@ -46,11 +46,8 @@ B_TREE.prototype.insert = function(k){
 	}else{
 		/* The tree is not empty */
 
-
-
 		/* If the root is full, grow the tree up */
 		if(this.root.numkeys === 2 * this.t - 1){
-
 			var newNode = new B_TREE_NODE(this.t, false);
 
 			/* Have the new root have the current root its child */
