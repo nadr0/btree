@@ -26,6 +26,28 @@ function B_TREE(t){
 
 	// Keep track of the height
 	this.height = 0;
+
+
+	// Storage for displaying
+	this.NODE_STORAGE = null;
+
+}
+
+/* 
+	Populate the NODE_STORAGE for display
+*/
+B_TREE.prototype.setupForDisplay = function(){
+
+	/* Create slots for each height */
+	this.NODE_STORAGE = new Array(this.height);
+
+	for (var i = 0; i < this.height; i++) {
+		/* 	Size of 1 just for some space 
+			Array.push will auto increase the size
+		*/
+		this.NODE_STORAGE[i] = new Array(1);
+	};
+
 }
 
 /*
@@ -42,13 +64,15 @@ B_TREE.prototype.insert = function(k){
 		this.root.keys[0] = k;
 		this.root.numkeys = 1;
 		this.height = 1;
-
+		this.parent = null;
 	}else{
 		/* The tree is not empty */
 
 		/* If the root is full, grow the tree up */
 		if(this.root.numkeys === 2 * this.t - 1){
 			var newNode = new B_TREE_NODE(this.t, false);
+			newNode.parent = null;
+			newNode.height = 1;
 
 			/* Have the new root have the current root its child */
 			newNode.C[0] = this.root;
@@ -62,6 +86,11 @@ B_TREE.prototype.insert = function(k){
 			}
 			
 			newNode.C[i].insertNonFull(k);
+
+			/* Increase height */
+			for (var i = 0; i < newNode.C.length; i++) {
+				newNode.C[i].height++;
+			};
 
 			/* Set the new root */
 			this.root = newNode;

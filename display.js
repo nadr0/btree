@@ -21,7 +21,16 @@ function display_B_TREE(btree){
 	var RECT_Y = RECT_HEIGHT;
 
 	/* Draw the root */
-	display_B_TREE_NODE(btree.root, RECT_X, RECT_Y,SITE_WIDTH, SITE_HEIGHT, RECT_WIDTH, RECT_HEIGHT);
+
+	/* Fixes drawing issues */
+	context.lineWidth = 2;
+
+	/* Draw the node*/
+	context.beginPath();
+	context.rect(RECT_X, RECT_Y, RECT_WIDTH, RECT_HEIGHT);
+	context.closePath();
+	context.stroke();
+
 }
 
 /*

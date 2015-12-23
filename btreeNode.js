@@ -22,6 +22,14 @@ function B_TREE_NODE(t,leaf){
 	/* Children */
 	this.C = [];
 
+	/* Height 
+		- Default height 1 instead of zero indexed
+	*/
+	this.height = 1;
+
+	/* Parent node */
+	this.parent = null;
+
 }
 
 
@@ -89,9 +97,6 @@ B_TREE_NODE.prototype.splitChild = function(i, y){
 
 	}
 
-
-
-
 	y.numkeys = this.t - 1;
 
 	for(var j = this.numkeys; j >= i + 1; j--){
@@ -110,12 +115,24 @@ B_TREE_NODE.prototype.splitChild = function(i, y){
 	this.numkeys = this.numkeys + 1;
 }
 
+/* 
+	Traverse the b-tree 
+		- Main use to set the parents 
+*/
 
-B_TREE_NODE.prototype.traverse = function(){
+B_TREE_NODE.prototype.traverse = function(parent,btree){
 	var i;
-    for (i = 0; i < this.C.length; i++)
-    {
-        if (this.leaf === false)
-            this.C[i].traverse();
-    }
+	var currentParent = parent;
+	for (i = 0; i < this.C.length; i++)
+	{
+		/* Sets the parents to currently update them when traversing the structure */
+		this.C[i].parent = currentParent;
+		this.C[i].height = currentParent.height + 1;
+
+		/* Push into arrays */
+		btree.NODE_STORAGE[this.C[i].height-1].push(this.C[i].keys);
+
+		if (this.leaf === false)
+			this.C[i].traverse(this.C[i],btree);
+	}
 }

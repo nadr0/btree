@@ -17,12 +17,19 @@
     <canvas id="mycanvas" style="border: 1px solid black;" width="100" height="100"></canvas>
 
     <script>
+    
         var btree = new B_TREE(2);
         btree.insert(1);
         btree.insert(2);
         btree.insert(3);
         btree.insert(4);
+        btree.insert(5);
+        btree.insert(6);
+        btree.insert(7);
+        btree.insert(8);
+        btree.insert(9);
 
+        btree.setupForDisplay();
         var canvas = document.getElementById("mycanvas");
         var context = canvas.getContext('2d');
 
