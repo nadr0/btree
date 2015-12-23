@@ -31,6 +31,8 @@ function B_TREE(t){
 	// Storage for displaying
 	this.NODE_STORAGE = null;
 
+	this.RECT_STORAGE_DIVIDER = null;
+
 }
 
 /* 
@@ -40,12 +42,13 @@ B_TREE.prototype.setupForDisplay = function(){
 
 	/* Create slots for each height */
 	this.NODE_STORAGE = new Array(this.height);
+	this.RECT_STORAGE_DIVIDER = new Array(this.height);
 
 	for (var i = 0; i < this.height; i++) {
 		/* 	Size of 1 just for some space 
 			Array.push will auto increase the size
 		*/
-		this.NODE_STORAGE[i] = new Array(1);
+		this.NODE_STORAGE[i] = [];
 	};
 
 }
