@@ -1,11 +1,11 @@
-function rectangleBoundary(left,right,top,bottom,spacing){
+function rectangleBoundary(left,right,top,bottom,horiztonalSpacing){
 
 	this.left = left;
 	this.right = right;
 	this.top = top;
 	this.bottom = bottom;
 
-	this.spacing = spacing;
+	this.horiztonalSpacing = horiztonalSpacing;
 
 	this.nodes = [];
 }
