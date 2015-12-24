@@ -93,27 +93,32 @@ function setupBoundaries(btree){
 			current_rect = new rectangleBoundary(left,right,top,bottom,0,0);
 			btree.RECT_STORAGE_DIVIDER[i].nodes.push(current_rect);
 
-			textSpacing = RECT_WIDTH/(current_node.length+1);
-			lineSpacing = RECT_WIDTH/(current_node.length);
+			textSpacing = RECT_WIDTH/(2*btree.t);
+			lineSpacing = RECT_WIDTH/(2*btree.t-1);
 
-			for (var q = 0; q < current_node.length; q++) {
-				context.beginPath();
-				context.fillStyle = "black";
-				context.strokeStyle = "white";
-				context.lineWidth = 2;
-				context.font = "17px Sans-serif";
-				
-				textWidth = context.measureText(current_node[q]).width;
-				
-				/* Random 1/3? */
-				textHeight = 17/3;
+			for (var q = 0; q < btree.t * 2 - 1; q++) {
+				if(q < current_node.length){
+					current_rect.keys.push(current_node[q]);
 
-				/* subtract the width of text */
-				context.strokeText(current_node[q], left+(textSpacing*(q+1)) - (textWidth/2), top + (RECT_HEIGHT/2) + textHeight);
-				context.fillText(current_node[q], left+(textSpacing*(q+1)) - (textWidth/2), top + (RECT_HEIGHT/2) + textHeight);
-				context.closePath();
+					context.beginPath();
+					context.fillStyle = "white";
+					context.strokeStyle = "white";
+					context.lineWidth = 2;
+					context.font = "17px Sans-serif";
+					
+					textWidth = context.measureText(current_node[q]).width;
+					
+					/* Random 1/3? */
+					textHeight = 17/3;
 
-				if(q + 1 < current_node.length){
+					/* subtract the width of text */
+					// context.strokeText(current_node[q], left+(textSpacing*(q+1)) - (textWidth/2), top + (RECT_HEIGHT/2) + textHeight);
+					context.fillText(current_node[q], left+(textSpacing*(q+1)) - (textWidth/2), top + (RECT_HEIGHT/2) + textHeight);
+					context.closePath();
+
+				}
+
+				if(q + 1 < btree.t * 2 - 1){
 					context.beginPath();
 					context.strokeStyle = "black";
 					context.moveTo(left+(lineSpacing*(q+1)), top);
@@ -125,5 +130,100 @@ function setupBoundaries(btree){
 			};
 		};
 	};	
+
+	/* Takes all nodes and sets children */ 
+	setAllChildren(btree);
+	drawChildrenLines(btree);
 }
+
+
+function setAllChildren(btree){
+	var current_rect;
+	for (var i = 0; i < btree.RECT_STORAGE_DIVIDER.length; i++) {
+		for (var j = 0; j < btree.RECT_STORAGE_DIVIDER[i].nodes.length; j++) {
+			current_rect = btree.RECT_STORAGE_DIVIDER[i].nodes[j];
+			if(i+1 < btree.height){
+				for (var k = 0; k < btree.RECT_STORAGE_DIVIDER[i+1].nodes.length; k++) {
+					current_rect.C.push( btree.RECT_STORAGE_DIVIDER[i+1].nodes[k]);
+				};
+			}
+		};
+	};
+
+}
+
+
+function drawChildrenLines(btree){
+
+	var current_rect;
+	var current_child_rect;
+	var key;
+	var found;
+
+	var lineSpacingX = 0;
+	var lineSpacingY = 0;
+
+	var numChildren = 0;
+	var childrenStored = [];
+
+	for (var i = 0; i < btree.RECT_STORAGE_DIVIDER.length; i++) {
+		for (var j = 0; j < btree.RECT_STORAGE_DIVIDER[i].nodes.length; j++) {
+			current_rect = btree.RECT_STORAGE_DIVIDER[i].nodes[j];
+
+			numChildren = 0;
+			childrenStored = [];
+
+			for (var k = 0; k < current_rect.C.length; k++) {
+				current_child_rect = current_rect.C[k];
+				key = current_rect.C[k].keys;
+				found = btree.root.search(key[0]);
+				if(found){
+					if(found.parent.keys[0] === current_rect.keys[0]){
+						numChildren++;
+						childrenStored.push(current_child_rect);
+					}
+				}
+			};
+
+			lineSpacingX = current_child_rect.right/(numChildren-1);
+
+			var w = 0;
+
+			for (var k = 0; k < current_rect.C.length; k++) {
+				current_child_rect = current_rect.C[k];
+				key = current_rect.C[k].keys;
+
+				lineSpacingY = current_child_rect.bottom;
+
+				found = btree.root.search(key[0]);
+				if(found){
+					if(found.parent.keys[0] === current_rect.keys[0]){
+						/* Draw line from parent to child node */
+						context.beginPath();
+						context.strokeStyle = "black";
+						context.moveTo(current_rect.left + (lineSpacingX*w), current_rect.top + lineSpacingY);
+						context.lineTo(current_child_rect.left + (lineSpacingX/2), current_child_rect.top);
+						context.stroke();
+						context.closePath();
+						w++;
+					}
+				}
+			};
+
+		};
+	};    
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
 

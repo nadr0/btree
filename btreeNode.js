@@ -42,6 +42,7 @@ B_TREE_NODE.prototype.insertNonFull = function(k){
 	/* Check for leaf node */
 	if(this.leaf === true){
 
+
 		while(i >= 0 && this.keys[i] > k){
 			this.keys[i+1] = this.keys[i];
 			i--;
@@ -82,9 +83,12 @@ B_TREE_NODE.prototype.splitChild = function(i, y){
 
 	for(var j = 0; j < this.t - 1; j++){
 		z.keys[j] = y.keys[j+this.t];
-		y.keys.splice(j+this.t,1);
 
 	}
+	for (var j = z.keys.length; j > 0; j--) {
+		y.keys.pop();
+	};
+
 
 	if(y.leaf === false){
 		for(var j = 0; j < this.t; j++){
@@ -97,6 +101,7 @@ B_TREE_NODE.prototype.splitChild = function(i, y){
 
 	}
 
+	/* Decrease the number of keys */
 	y.numkeys = this.t - 1;
 
 	for(var j = this.numkeys; j >= i + 1; j--){
@@ -136,3 +141,25 @@ B_TREE_NODE.prototype.traverse = function(parent,btree){
 			this.C[i].traverse(this.C[i],btree);
 	}
 }
+
+
+B_TREE_NODE.prototype.search = function(k){
+
+	var i = 0;
+	while( i < this.numkeys && k > this.keys[i]){
+		i++;
+	}
+
+	if(this.keys[i] === k){
+		return this;
+	}
+
+	if(this.leaf === true){
+		return null;
+	}
+
+	return this.C[i].search(k);
+}
+
+
+

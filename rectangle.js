@@ -14,9 +14,10 @@ function rectangleBoundary(left,right,top,bottom,horizontalSpacing,bg){
 	/* Debug */
 	this.draw();
 
-	/* Stores parent rect */
-	this.parent = null;
+	/* Store the children */
+	this.C = [];
 
+	this.keys = [];
 }
 
 
@@ -33,6 +34,7 @@ rectangleBoundary.prototype.draw = function(){
 
 	if(!this.background){
 		context.beginPath();
+		context.lineWidth = 10;
 		context.rect(this.left, this.top, this.right, this.bottom);
 		context.fillStyle = backgroundColors[randomColorIndex];
 		context.strokeStyle = borderColors[randomColorIndex];
