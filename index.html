@@ -20,22 +20,19 @@
     <script>
     
         var btree = new B_TREE(2);
-        
+
         btree.insert(1);
         btree.insert(2);
         btree.insert(3);
         btree.insert(14);
         btree.insert(5);
         btree.insert(6);
-        btree.insert(17);
-        btree.insert(28);
-        btree.insert(49);
+        btree.insert(13);
+        btree.insert(22);
         btree.insert(34);
-        btree.insert(35);
-        btree.insert(46);
-        btree.insert(77);
-        btree.insert(68);
-        btree.insert(49);
+        btree.insert(12);
+        btree.insert(54);
+        btree.insert(62);
 
         var canvas = document.getElementById("mycanvas");
         var context = canvas.getContext('2d');
@@ -49,7 +46,7 @@
         /* Push into arrays */
         
         /* THIS IS FOR THE ROOT WHICH DOESN'T GET ADDED IN THE TRAVERSE CALL */
-        btree.NODE_STORAGE[0].push(btree.root);
+        btree.NODE_STORAGE[0].push(btree.root.keys);
         btree.root.traverse(btree.root,btree);
         /* --------- */
 
