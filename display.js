@@ -57,11 +57,17 @@ function setupBoundaries(btree){
 	var verticalSpacing = SITE_HEIGHT/treeHeight;
 	var horizontalSpacing = 0;
 
+	var rectSpacing = 0;
 	/* Create the height boundaries of the tree */
 	for (var i = 0; i < treeHeight; i++) {
+		if(i === 0){
+			rectSpacing = verticalSpacing;
+		}
 		horizontalSpacing = SITE_WIDTH/(btree.NODE_STORAGE[i].length+1);
 		btree.RECT_STORAGE_DIVIDER[i] =  new rectangleBoundary(0,SITE_WIDTH,0,verticalSpacing*(i+1),horizontalSpacing,1);
+		btree.RECT_STORAGE_DIVIDER[i].background_spacing = rectSpacing;
 	};
+
 
 	/* Current node to be processed */
 	var current_node;
@@ -112,7 +118,8 @@ function setupBoundaries(btree){
 					context.fillStyle = "white";
 					context.strokeStyle = borderColors[borderColors];
 					context.lineWidth = 5;
-					context.font = "17px Sans-serif";
+					// context.font = "17px Sans-serif";
+					context.font = "17px Verdana";
 					
 					textWidth = context.measureText(current_node[q]).width;
 
@@ -120,16 +127,17 @@ function setupBoundaries(btree){
 					textHeight = 17/3;
 
 					/* subtract the width of text */
-					context.strokeText(current_node[q], left+(textSpacing*(q+1)) - (textWidth) + (constant/2), top + (RECT_HEIGHT/2) + textHeight);
+					// context.strokeText(current_node[q], left+(textSpacing*(q+1)) - (textWidth) + (constant/2), top + (RECT_HEIGHT/2) + textHeight);
 						
 					context.fillText(current_node[q], left+(textSpacing*(q+1)) - (textWidth) + (constant/2), top + (RECT_HEIGHT/2) + textHeight);
 					context.closePath();
-					constant += textWidth;
+					constant += 21;
 
 				}
 
 				if(q + 1 < btree.t * 2 - 1){
 					context.beginPath();
+					/* Bar width for (m) elements in node */
 					context.lineWidth = 5;
 					context.strokeStyle = borderColors[randomColorIndex];
 					context.moveTo(left+(lineSpacing*(q+1)), top);
@@ -199,6 +207,8 @@ function drawChildrenLines(btree){
 			lineSpacingX = current_child_rect.right/(2*btree.t-1);
 
 			var w = 0;
+			/* Radius of the circles at the ends of child lines */
+			var radius = 4;
 
 			for (var k = 0; k < current_rect.C.length; k++) {
 				current_child_rect = current_rect.C[k];
@@ -222,8 +232,8 @@ function drawChildrenLines(btree){
 
 						context.beginPath();
 						context.fillStyle = "#2c3e50";
-						context.arc(current_rect.left + (lineSpacingX*w),current_rect.top + lineSpacingY, 5, 0, 2*Math.PI);
-						context.arc(current_child_rect.left + (lineSpacingX/2), current_child_rect.top, 5, 0, 2*Math.PI);
+						context.arc(current_rect.left + (lineSpacingX*w),current_rect.top + lineSpacingY, radius, 0, 2*Math.PI);
+						context.arc(current_child_rect.left + (lineSpacingX/2), current_child_rect.top, radius, 0, 2*Math.PI);
 						context.closePath();
 						context.fill();
 

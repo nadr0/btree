@@ -21,6 +21,8 @@ function rectangleBoundary(left,right,top,bottom,horizontalSpacing,bg,fill,strok
 	this.C = [];
 
 	this.keys = [];
+
+	this.background_spacing = 0;
 }
 
 
@@ -38,6 +40,12 @@ rectangleBoundary.prototype.draw = function(){
 		context.strokeStyle = this.stroke_style;
 		context.stroke();
 		context.fill();
+		context.closePath();
+	}else{
+		context.beginPath();
+		context.moveTo(this.left, this.bottom);
+		context.lineTo(this.right, this.bottom);
+		context.stroke();
 		context.closePath();
 	}
 }
