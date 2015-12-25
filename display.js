@@ -75,6 +75,10 @@ function setupBoundaries(btree){
 	var lineSpacing;
 	var textWidth;
 	var textHeight;
+	var constant;
+
+	var backgroundColors = ["","#1abc9c","#2ecc71","#3498db","#9b59b6","#f1c40f","#e67e22","#e74c3c","#95a5a6"];
+	var borderColors = ["","#16a085","#27ae60","#2980b9","#8e44ad","#f39c12","#d35400","#c0392b","#7f8c8d"];
 
 	/* Draw the nodes */
 	for (var i = 0; i < treeHeight; i++) {
@@ -90,11 +94,15 @@ function setupBoundaries(btree){
 			right = RECT_WIDTH;
 			bottom = RECT_HEIGHT;
 
-			current_rect = new rectangleBoundary(left,right,top,bottom,0,0);
+			var randomColorIndex = Math.floor((Math.random() * 8) + 1);
+
+			current_rect = new rectangleBoundary(left,right,top,bottom,0,0, backgroundColors[randomColorIndex], borderColors[randomColorIndex]);
 			btree.RECT_STORAGE_DIVIDER[i].nodes.push(current_rect);
 
 			textSpacing = RECT_WIDTH/(2*btree.t);
 			lineSpacing = RECT_WIDTH/(2*btree.t-1);
+			
+			constant = 0;
 
 			for (var q = 0; q < btree.t * 2 - 1; q++) {
 				if(q < current_node.length){
@@ -102,25 +110,28 @@ function setupBoundaries(btree){
 
 					context.beginPath();
 					context.fillStyle = "white";
-					context.strokeStyle = "white";
-					context.lineWidth = 2;
+					context.strokeStyle = borderColors[borderColors];
+					context.lineWidth = 5;
 					context.font = "17px Sans-serif";
 					
 					textWidth = context.measureText(current_node[q]).width;
-					
+
 					/* Random 1/3? */
 					textHeight = 17/3;
 
 					/* subtract the width of text */
-					// context.strokeText(current_node[q], left+(textSpacing*(q+1)) - (textWidth/2), top + (RECT_HEIGHT/2) + textHeight);
-					context.fillText(current_node[q], left+(textSpacing*(q+1)) - (textWidth/2), top + (RECT_HEIGHT/2) + textHeight);
+					context.strokeText(current_node[q], left+(textSpacing*(q+1)) - (textWidth) + (constant/2), top + (RECT_HEIGHT/2) + textHeight);
+						
+					context.fillText(current_node[q], left+(textSpacing*(q+1)) - (textWidth) + (constant/2), top + (RECT_HEIGHT/2) + textHeight);
 					context.closePath();
+					constant += textWidth;
 
 				}
 
 				if(q + 1 < btree.t * 2 - 1){
 					context.beginPath();
-					context.strokeStyle = "black";
+					context.lineWidth = 5;
+					context.strokeStyle = borderColors[randomColorIndex];
 					context.moveTo(left+(lineSpacing*(q+1)), top);
 					context.lineTo(left+(lineSpacing*(q+1)), top+RECT_HEIGHT);
 					context.stroke();
@@ -185,7 +196,7 @@ function drawChildrenLines(btree){
 				}
 			};
 
-			lineSpacingX = current_child_rect.right/(numChildren-1);
+			lineSpacingX = current_child_rect.right/(2*btree.t-1);
 
 			var w = 0;
 
@@ -199,12 +210,23 @@ function drawChildrenLines(btree){
 				if(found){
 					if(found.parent.keys[0] === current_rect.keys[0]){
 						/* Draw line from parent to child node */
+
 						context.beginPath();
-						context.strokeStyle = "black";
+						context.lineWidth = 2;
+						context.strokeStyle = "#2c3e50";
 						context.moveTo(current_rect.left + (lineSpacingX*w), current_rect.top + lineSpacingY);
 						context.lineTo(current_child_rect.left + (lineSpacingX/2), current_child_rect.top);
 						context.stroke();
 						context.closePath();
+
+
+						context.beginPath();
+						context.fillStyle = "#2c3e50";
+						context.arc(current_rect.left + (lineSpacingX*w),current_rect.top + lineSpacingY, 5, 0, 2*Math.PI);
+						context.arc(current_child_rect.left + (lineSpacingX/2), current_child_rect.top, 5, 0, 2*Math.PI);
+						context.closePath();
+						context.fill();
+
 						w++;
 					}
 				}

@@ -1,4 +1,4 @@
-function rectangleBoundary(left,right,top,bottom,horizontalSpacing,bg){
+function rectangleBoundary(left,right,top,bottom,horizontalSpacing,bg,fill,stroke){
 
 	this.left = left;
 	this.right = right;
@@ -10,6 +10,9 @@ function rectangleBoundary(left,right,top,bottom,horizontalSpacing,bg){
 	this.nodes = [];
 
 	this.background = bg;
+
+	this.fill_style = fill;
+	this.stroke_style = stroke;
 
 	/* Debug */
 	this.draw();
@@ -27,17 +30,12 @@ function rectangleBoundary(left,right,top,bottom,horizontalSpacing,bg){
 */
 rectangleBoundary.prototype.draw = function(){
 
-
-  	var backgroundColors = ["","#1abc9c","#2ecc71","#3498db","#9b59b6","#34495e","#f1c40f","#e67e22","#e74c3c","#95a5a6"];
-        var borderColors = ["","#16a085","#27ae60","#2980b9","#8e44ad","#2c3e50","#f39c12","#d35400","#c0392b","#7f8c8d"];
-	var randomColorIndex = Math.floor((Math.random() * 9) + 1);
-
 	if(!this.background){
 		context.beginPath();
 		context.lineWidth = 10;
 		context.rect(this.left, this.top, this.right, this.bottom);
-		context.fillStyle = backgroundColors[randomColorIndex];
-		context.strokeStyle = borderColors[randomColorIndex];
+		context.fillStyle = this.fill_style;
+		context.strokeStyle = this.stroke_style;
 		context.stroke();
 		context.fill();
 		context.closePath();
