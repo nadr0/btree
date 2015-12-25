@@ -57,15 +57,10 @@ function setupBoundaries(btree){
 	var verticalSpacing = SITE_HEIGHT/treeHeight;
 	var horizontalSpacing = 0;
 
-	var rectSpacing = 0;
 	/* Create the height boundaries of the tree */
 	for (var i = 0; i < treeHeight; i++) {
-		if(i === 0){
-			rectSpacing = verticalSpacing;
-		}
 		horizontalSpacing = SITE_WIDTH/(btree.NODE_STORAGE[i].length+1);
 		btree.RECT_STORAGE_DIVIDER[i] =  new rectangleBoundary(0,SITE_WIDTH,0,verticalSpacing*(i+1),horizontalSpacing,1);
-		btree.RECT_STORAGE_DIVIDER[i].background_spacing = rectSpacing;
 	};
 
 
@@ -245,13 +240,6 @@ function drawChildrenLines(btree){
 		};
 	};    
 }
-
-
-
-
-
-
-
 
 
 
