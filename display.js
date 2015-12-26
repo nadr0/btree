@@ -1,36 +1,3 @@
-
-function display_B_TREE(btree){
-	/* Get the width of the browser */
-	var SITE_WIDTH = window.innerWidth;
-	/* Get the height of the browser */
-	var SITE_HEIGHT = window.innerHeight;
-
-	/* The width of the nodes in respect to the SITE_WIDTH */
-	var RECT_WIDTH_PERCENT = 5;
-
-	/* Every RECT's size is a percent of the SITE_WIDTH */
-	var RECT_WIDTH = SITE_WIDTH * (RECT_WIDTH_PERCENT/100);
-	/* RECT's height is a third of its width */
-	var RECT_HEIGHT = RECT_WIDTH * (1/3);
-
-	/* Starting root node x location */
-	var RECT_X = SITE_WIDTH/2 - RECT_WIDTH/2;
-
-	var RECT_Y = RECT_HEIGHT;
-
-	/* Draw the root */
-
-	/* Fixes drawing issues */
-	context.lineWidth = 2;
-
-	/* Draw the node*/
-	context.beginPath();
-	context.rect(RECT_X, RECT_Y, RECT_WIDTH, RECT_HEIGHT);
-	context.closePath();
-	context.stroke();
-
-}
-
 /* 
 	Determines the boundary rectangles for the btree nodes
 */

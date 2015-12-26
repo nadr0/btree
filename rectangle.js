@@ -37,7 +37,7 @@ function rectangleBoundary(left,right,top,bottom,horizontalSpacing,bg,fill,strok
 	/* Stroke style for the rectangle when drawn */
 	this.stroke_style = stroke;
 
-
+	/* Draws the rectangle when created */
 	this.draw();
 
 	/* Store the children */
@@ -62,7 +62,7 @@ rectangleBoundary.prototype.draw = function(){
 	*/
 	if(!this.background){
 		/* Draw the node rectangel */
-		
+
 		context.beginPath();
 		/* Edge width around the rectangle */
 		context.lineWidth = 10;
