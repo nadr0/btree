@@ -45,6 +45,9 @@ function rectangleBoundary(left,right,top,bottom,horizontalSpacing,bg,fill,strok
 
 	/* Store the keys of the node */	
 	this.keys = [];
+
+	/* Store text centers */
+	this.textCenters = [];
 }
 
 
@@ -74,3 +77,20 @@ rectangleBoundary.prototype.draw = function(){
 		context.closePath();
 	}
 }
+
+
+
+rectangleBoundary.prototype.calculateTextCenters = function(lineSpacing,m){
+
+	for(var i = 0; i < m; i++){
+		this.textCenters.push(this.left + (i * (lineSpacing)) + (lineSpacing/2));
+	}
+}
+
+
+
+
+
+
+
+

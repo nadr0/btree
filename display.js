@@ -95,12 +95,9 @@ function setupBoundaries(btree){
 			textSpacing = RECT_WIDTH/(2*btree.t);
 			/* Calculate the line spacing to seperate the keys in the array */
 			lineSpacing = RECT_WIDTH/(2*btree.t-1);
-			
-			/* 
-				Sum up all the text widths of all keys 
-				This is used to properly space all keys in the array
-			*/
-			sumTextWidth = 0;
+
+			/* Set the text centers for the keys in the node */
+			current_rect.calculateTextCenters(lineSpacing, 2*btree.t - 1);
 
 			/* Go through all the keys in the node */
 			for (var q = 0; q < btree.t * 2 - 1; q++) {
@@ -115,21 +112,17 @@ function setupBoundaries(btree){
 					context.fillStyle = "white";
 					context.strokeStyle = borderColors[borderColors];
 					context.lineWidth = 5;
-					context.font = "17px Verdana";
+					context.font = "17px Courier New";
 					
-
 					textWidth = context.measureText(current_node[q]).width;
 					/* Random 1/3? */
 					textHeight = 17/3;
 
 					// This is for drawing an outline around the text
-					/* TODO: subtract the width of text */
 					// context.strokeText(current_node[q], left+(textSpacing*(q+1)) - (textWidth) + (sumTextWidth/2), top + (RECT_HEIGHT/2) + textHeight);
 						
-					context.fillText(current_node[q], left+(textSpacing*(q+1)) - (textWidth) + (sumTextWidth/2), top + (RECT_HEIGHT/2) + textHeight);
+					context.fillText(current_node[q],current_rect.textCenters[q] - textWidth/2, top + (RECT_HEIGHT/2) + textHeight);
 					context.closePath();
-					sumTextWidth += 21;
-
 				}
 
 				/* 
@@ -156,6 +149,10 @@ function setupBoundaries(btree){
 	drawChildrenLines(btree);
 }
 
+/*
+	At a given height N, set all nodes at height N+1 to be its child
+	The rectangles have a child array, C
+*/
 function setAllChildren(btree){
 	var current_rect;
 	for (var i = 0; i < btree.RECT_STORAGE_DIVIDER.length; i++) {
@@ -185,28 +182,50 @@ function drawChildrenLines(btree){
 	var numChildren = 0;
 	var childrenStored = [];
 
+	/* Height loop */
 	for (var i = 0; i < btree.RECT_STORAGE_DIVIDER.length; i++) {
+		/* All nodes at a given height */
 		for (var j = 0; j < btree.RECT_STORAGE_DIVIDER[i].nodes.length; j++) {
+			/* Get the current node/rect */
 			current_rect = btree.RECT_STORAGE_DIVIDER[i].nodes[j];
 
 			numChildren = 0;
 			childrenStored = [];
 
+			/* Go through the rectangles children */
 			for (var k = 0; k < current_rect.C.length; k++) {
+				/* Get the first child */
 				current_child_rect = current_rect.C[k];
+
+				/* Take the first child rect, then search the btree
+					for that key, if the parent's keys match the parent's 
+					rectangles keys, then you know its the child
+				*/
 				key = current_rect.C[k].keys;
 				found = btree.root.search(key[0]);
+
 				if(found){
+					/* Match the current rectangle keys and the node's parent keys */
 					if(found.parent.keys[0] === current_rect.keys[0]){
+						/* Child was matched! */
 						numChildren++;
 						childrenStored.push(current_child_rect);
 					}
 				}
 			};
 
+			/* Line spacing for the line segements from parent to child 
+				Length is the max number of nodes in a node 
+			*/
 			lineSpacingX = current_child_rect.right/(2*btree.t-1);
 
+			/* Since we are going through all children, 
+				It is not going to give the proper spacing because
+				we will be counting children that isn't ours with
+				the for loops variable 
+			*/
 			var w = 0;
+
 			/* Radius of the circles at the ends of child lines */
 			var radius = 4;
 
@@ -217,25 +236,38 @@ function drawChildrenLines(btree){
 				lineSpacingY = current_child_rect.bottom;
 
 				found = btree.root.search(key[0]);
+
 				if(found){
 					if(found.parent.keys[0] === current_rect.keys[0]){
+
 						/* Draw line from parent to child node */
 						context.beginPath();
 						context.lineWidth = 2;
+
+						/* Hard coded from FLAT UI color */
 						context.strokeStyle = "#2c3e50";
 						context.moveTo(current_rect.left + (lineSpacingX*w), current_rect.top + lineSpacingY);
 						context.lineTo(current_child_rect.left + (lineSpacingX/2), current_child_rect.top);
 						context.stroke();
 						context.closePath();
 
-						/* Draw circles at both ends of the line to make a segement */
+						/* Circle outline behind */
 						context.beginPath();
 						context.fillStyle = "#2c3e50";
+						context.arc(current_rect.left + (lineSpacingX*w),current_rect.top + lineSpacingY, radius+(radius/2), 0, 2*Math.PI);
+						context.arc(current_child_rect.left + (lineSpacingX/2), current_child_rect.top, radius+(radius/2), 0, 2*Math.PI);
+						context.closePath();
+						context.fill();
+
+						/* Draw circles at both ends of the line to make a segement */
+						context.beginPath();
+						context.fillStyle = "#bdc3c7";
 						context.arc(current_rect.left + (lineSpacingX*w),current_rect.top + lineSpacingY, radius, 0, 2*Math.PI);
 						context.arc(current_child_rect.left + (lineSpacingX/2), current_child_rect.top, radius, 0, 2*Math.PI);
 						context.closePath();
 						context.fill();
 
+						/* Only if the child was found */
 						w++;
 					}
 				}
