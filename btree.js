@@ -116,3 +116,15 @@ B_TREE.prototype.insert = function(k){
 B_TREE.prototype.delete = function(){
 
 }
+
+/*
+	Update
+		- Call this to update the HTML display
+*/
+B_TREE.prototype.update = function(){
+
+}
+
+
+
+
