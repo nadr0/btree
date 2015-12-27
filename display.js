@@ -9,7 +9,10 @@ function setupBoundaries(btree){
 	var SITE_WIDTH = window.innerWidth;
 	var SITE_HEIGHT = window.innerHeight;
 	/* The width of the node in respect to the SITE_WIDTH */
-	var RECT_WIDTH_PERCENT = 10;
+	/* 10 is decent */
+	/* 8 if need a taller tree */
+	// var RECT_WIDTH_PERCENT = 8;
+	var RECT_WIDTH_PERCENT = (box1.box_x - box1.x)/5;
 	/* Every RECT's size is a percent of the SITE_WIDTH */
 	var RECT_WIDTH = SITE_WIDTH * (RECT_WIDTH_PERCENT/100);
 	/* RECT's height is a third of its width */
@@ -119,7 +122,7 @@ function setupBoundaries(btree){
 					textHeight = 17/3;
 
 					// This is for drawing an outline around the text
-					// context.strokeText(current_node[q], left+(textSpacing*(q+1)) - (textWidth) + (sumTextWidth/2), top + (RECT_HEIGHT/2) + textHeight);
+					context.strokeText(current_node[q], left+(textSpacing*(q+1)) - (textWidth) + (sumTextWidth/2), top + (RECT_HEIGHT/2) + textHeight);
 						
 					context.fillText(current_node[q],current_rect.textCenters[q] - textWidth/2, top + (RECT_HEIGHT/2) + textHeight);
 					context.closePath();
@@ -227,6 +230,7 @@ function drawChildrenLines(btree){
 			var w = 0;
 
 			/* Radius of the circles at the ends of child lines */
+			/* 4? */
 			var radius = 4;
 
 			for (var k = 0; k < current_rect.C.length; k++) {

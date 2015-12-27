@@ -8,6 +8,7 @@
         <script type="text/javascript" src="btree.js"></script>
         <script type="text/javascript" src="btreeNode.js"></script>
         <script type="text/javascript" src="display.js"></script>
+        <script type="text/javascript" src="controls.js"></script>
         <script type="text/javascript" src="rectangle.js"></script>
         <link type="text/css" rel="stylesheet" href="stylesheet.css"/>
 
@@ -26,6 +27,8 @@
         btree.insert(30);
         btree.insert(40);
         btree.insert(503);
+        btree.insert(504);
+        btree.insert(505);
         btree.insert(602);
         btree.insert(70);
         btree.insert(80);
@@ -40,6 +43,14 @@
         btree.insert(8);
         btree.insert(9);
 
+        var mouseDown = 0;
+        document.body.onmousedown = function() { 
+          ++mouseDown;
+        }
+        document.body.onmouseup = function() {
+          --mouseDown;
+        }
+
         var canvas = document.getElementById("mycanvas");
         var context = canvas.getContext('2d');
 
@@ -51,6 +62,19 @@
         context.fillStyle = "#ecf0f1";
         context.fill();
 
+        var mousePos = {};
+
+        /* Store the control boxes to update */
+        var controlBoxes = [];
+
+        var box1 = new controlBox(50,50,25);
+
+        function draw(e){
+            mousePos = getMousePos(canvas, e);
+        }
+
+        window.addEventListener('mousemove', draw, false);
+
         btree.setupForDisplay();
 
         /* Push into arrays */
@@ -61,6 +85,15 @@
         /* --------- */
 
         setupBoundaries(btree);
+
+        function animate(){
+            box1.update();
+            window.requestAnimationFrame(animate);
+        }
+
+
+        /* Begin loop! */
+        animate();
 
 
     </script>
