@@ -62,7 +62,7 @@
         /* Store the control boxes to update */
         var controlBoxes = [];
 
-        var box1 = new controlBox(50,50,25);
+        var box1 = new controlBox(50,50,25,"Scale Tree");
 
         function draw(e){
             mousePos = getMousePos(canvas, e);
@@ -89,6 +89,12 @@
 
         /* Begin loop! */
         animate();
+
+        function resizeWindow(){
+            btree.update();
+        }
+
+        window.onresize = resizeWindow;
 
 
     </script>

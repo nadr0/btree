@@ -129,7 +129,9 @@ B_TREE.prototype.update = function(){
         context.fillStyle = "#ecf0f1";
         context.fill();
 
+
 	scaleTree(this);
+
 }
 
 

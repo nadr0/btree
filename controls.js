@@ -6,17 +6,20 @@ function getMousePos(canvas, evt) {
     };
 }
 
-function controlBox(x,y,height){
+function controlBox(x,y,height,message){
 	this.x = x;
 	this.y = y;
 	this.height = height;
 
 	this.width = 10;
 
-	this.box_x = this.x;
 
 	this.hover = false;
 	this.maxOffSet = 110;	
+
+	this.message = message;
+
+	this.box_x = this.x + this.maxOffSet/2 - 5;
 }
 
 
@@ -32,12 +35,12 @@ controlBox.prototype.update = function(){
 	}
 
 	this.draw();
+	this.info(this.message);
 
 }
 
 controlBox.prototype.draw = function(){
 	/* Clear the control region */
-	// context.clearRect(this.x,this.y - this.height/2,this.width,this.height);
 
 	/* Fill in the region */
 	context.beginPath();
@@ -55,11 +58,12 @@ controlBox.prototype.draw = function(){
 	context.stroke();
 	context.closePath();
 
-
+	context.beginPath();
 	/* Draw the control box*/
 	context.fillStyle = "blue";
 	context.rect(this.box_x,this.y - this.height/2, this.width ,this.height);
 	context.fill();
+	context.closePath();
 
 }
 
@@ -68,4 +72,18 @@ controlBox.prototype.move = function(){
 		this.box_x = mousePos.x;
 		btree.update();
 	}
+}
+
+controlBox.prototype.info = function(message){
+	context.beginPath();
+	context.rect(this.x,this.y - 35,context.measureText(message).width,20);
+        context.fillStyle = "#ecf0f1";
+        context.fill();
+        context.closePath();
+
+	context.beginPath();
+	context.fillStyle = "black";
+	context.fillText(message, this.x, this.y - 20);
+	context.closePath();
+
 }

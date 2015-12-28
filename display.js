@@ -250,9 +250,9 @@ function drawChildrenLines(btree){
 
 
 function scaleTree(btree){
-context.rect(0,0,canvas.width, canvas.height);
-context.fillStyle = "#ecf0f1";
-context.fill();
+	context.rect(0,0,canvas.width, canvas.height);
+	context.fillStyle = "#ecf0f1";
+	context.fill();
 
 	/* Get the height of the btree tree */
 	var treeHeight = btree.height;
