@@ -78,10 +78,9 @@ rectangleBoundary.prototype.draw = function(){
 	}
 }
 
-
-
+/* Calculates the text centers for a given node */
 rectangleBoundary.prototype.calculateTextCenters = function(lineSpacing,m){
-
+	this.textCenters = [];
 	for(var i = 0; i < m; i++){
 		this.textCenters.push(this.left + (i * (lineSpacing)) + (lineSpacing/2));
 	}

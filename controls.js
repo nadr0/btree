@@ -40,6 +40,7 @@ controlBox.prototype.draw = function(){
 	// context.clearRect(this.x,this.y - this.height/2,this.width,this.height);
 
 	/* Fill in the region */
+	context.beginPath();
 	context.rect(this.x,this.y - this.height/2,this.maxOffSet + this.width,this.height + 1);
         context.fillStyle = "#ecf0f1";
         context.fill();

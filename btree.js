@@ -122,14 +122,14 @@ B_TREE.prototype.delete = function(){
 		- Call this to update the HTML display
 */
 B_TREE.prototype.update = function(){
+        context.canvas.width = window.innerWidth;
+        context.canvas.height = window.innerHeight;
+
         context.rect(0,0,canvas.width, canvas.height);
         context.fillStyle = "#ecf0f1";
         context.fill();
 
-	this.setupForDisplay();
-	this.NODE_STORAGE[0].push(this.root.keys);
-        this.root.traverse(this.root,this);
-	setupBoundaries(this);
+	scaleTree(this);
 }
 
 
