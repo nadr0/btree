@@ -45,10 +45,10 @@ controlBox.prototype.draw = function(){
 	/* Fill in the region */
 	context.beginPath();
 	context.rect(this.x,this.y - this.height/2,this.maxOffSet + this.width,this.height + 1);
-        context.fillStyle = "#ecf0f1";
-        context.fill();
+    context.fillStyle = "#ecf0f1";
+    context.fill();
 
-        /* Draw controls */
+    /* Draw controls */
 
 	/* Draw line to determine range of values */
 	context.beginPath();
@@ -77,11 +77,15 @@ controlBox.prototype.move = function(){
 }
 
 controlBox.prototype.info = function(message){
+	/* 
+		Clear the background of the text on the canvas
+		Because this will be in the update loop
+	*/
 	context.beginPath();
 	context.rect(this.x,this.y - 35,context.measureText(message).width,20);
-        context.fillStyle = "#ecf0f1";
-        context.fill();
-        context.closePath();
+    context.fillStyle = "#ecf0f1";
+    context.fill();
+    context.closePath();
 
 	context.beginPath();
 	context.fillStyle = "black";
