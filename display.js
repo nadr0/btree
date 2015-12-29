@@ -73,7 +73,7 @@ function setupBoundaries(btree){
 			/* Go through each node at the height 
 				- Shift removes from back of the array
 			*/
-			current_node = btree.NODE_STORAGE[i].shift();
+			current_node = btree.NODE_STORAGE[i][j];
 
 			/* Get the X coordinate (i.e., left) by the horizontal spacing */
 			left = btree.RECT_STORAGE_DIVIDER[i].horizontalSpacing * (j+1) - (RECT_WIDTH/2);

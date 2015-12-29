@@ -43,6 +43,5 @@ ________________
 
 Controls
 ________________
-	- Change the control.js to check if mouse down not the mouse location until its down
-	- While the mouse is down, the slider can move not when its inside the box
-		: Meaning the mouse can go anywhere on the screen while its down after pressing inside the box
+DONE	- Change the control.js to check if mouse down not the mouse location until its down
+	
