@@ -1,0 +1,38 @@
+
+
+Btree features
+________________
+	- Delete
+
+
+
+Animate
+________________
+	- Insert
+	- Find
+	- Delete
+
+
+GUI
+________________
+	- Stats
+		: M
+		: Height
+		: runtimes 
+	- Change M
+	- Start with empty tree
+	- Insert
+	- Delete
+	- Find
+	- Switch color scheme
+		: Maybe hard to read/see bright colors
+	- Font switching
+	- Font size
+
+
+
+Sounds
+________________
+
+	- Insert
+	- Traversing

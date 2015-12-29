@@ -52,7 +52,7 @@ controlBox.prototype.draw = function(){
 
 	/* Draw line to determine range of values */
 	context.beginPath();
-	context.strokeStyle = "black";
+	context.strokeStyle = "#34495e";
 	context.moveTo(this.x,this.y);
 	context.lineTo(this.x + this.maxOffSet,this.y);
 	context.stroke();
@@ -60,9 +60,11 @@ controlBox.prototype.draw = function(){
 
 	context.beginPath();
 	/* Draw the control box*/
-	context.fillStyle = "blue";
+	context.fillStyle = "#bdc3c7";
+	context.strokeStyle = "#34495e";
 	context.rect(this.box_x,this.y - this.height/2, this.width ,this.height);
 	context.fill();
+	context.stroke();
 	context.closePath();
 
 }
