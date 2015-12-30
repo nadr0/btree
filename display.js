@@ -11,7 +11,6 @@ function setupBoundaries(btree){
 	/* The width of the node in respect to the SITE_WIDTH */
 	/* 10 is decent */
 	/* 8 if need a taller tree */
-	// var RECT_WIDTH_PERCENT = 8;
 	var RECT_WIDTH_PERCENT = (box1.box_x - box1.x)/5;
 	/* Every RECT's size is a percent of the SITE_WIDTH */
 	var RECT_WIDTH = SITE_WIDTH * (RECT_WIDTH_PERCENT/100);
@@ -33,9 +32,8 @@ function setupBoundaries(btree){
 		/* For the current height level, calculate the horizontal spacing */
 		horizontalSpacing = SITE_WIDTH/(btree.NODE_STORAGE[i].length+1);
 		/* Create the rectangle*/
-		btree.RECT_STORAGE_DIVIDER[i] =  new rectangleBoundary(0,SITE_WIDTH,0,verticalSpacing*(i+1),horizontalSpacing,1);
+		btree.RECT_STORAGE_DIVIDER[i] =  new rectangleBoundary(0,SITE_WIDTH,0,verticalSpacing*(i+1),horizontalSpacing,1);	
 	};
-
 
 	/*
 		---------------------------------
@@ -85,10 +83,24 @@ function setupBoundaries(btree){
 
 			/* Pick a random index to get a color for the node */
 			var randomColorIndex = Math.floor((Math.random() * 8) + 1);
+			var nodeColorIndex;
+			if(btree.treeBuilt){
+				nodeColorIndex = btree.nodeColorLookUp[i][j];
+				if(typeof nodeColorIndex != "undefined"){
+					console.log(j + ": INDEX = " + nodeColorIndex + "; height = " + i);
+					/* Create the node, set the x,y, width height, and the color for fill and stroke */
+					current_rect = new rectangleBoundary(left,right,top,bottom,0,0, backgroundColors[nodeColorIndex], borderColors[nodeColorIndex]);
+				}else{
+					/* Create the node, set the x,y, width height, and the color for fill and stroke */
+					current_rect = new rectangleBoundary(left,right,top,bottom,0,0, backgroundColors[randomColorIndex], borderColors[randomColorIndex]);
+					btree.nodeColorLookUp[i].push(randomColorIndex);
+				}
+			}else{
+				/* Create the node, set the x,y, width height, and the color for fill and stroke */
+				current_rect = new rectangleBoundary(left,right,top,bottom,0,0, backgroundColors[randomColorIndex], borderColors[randomColorIndex]);
+				btree.nodeColorLookUp[i].push(randomColorIndex);
+			}
 
-			/* Create the node, set the x,y, width height, and the color for fill and stroke */
-			current_rect = new rectangleBoundary(left,right,top,bottom,0,0, backgroundColors[randomColorIndex], borderColors[randomColorIndex]);
-			
 			/* At this current height in the tree, the rectangle needs this rectangle that was created */
 			btree.RECT_STORAGE_DIVIDER[i].nodes.push(current_rect);
 
@@ -136,7 +148,11 @@ function setupBoundaries(btree){
 					context.beginPath();
 					/* Bar width for (m) elements in node */
 					context.lineWidth = 5;
-					context.strokeStyle = borderColors[randomColorIndex];
+					if(nodeColorIndex){
+						context.strokeStyle = borderColors[nodeColorIndex];
+					}else{
+						context.strokeStyle = borderColors[randomColorIndex];
+					}
 					context.moveTo(left+(lineSpacing*(q+1)), top);
 					context.lineTo(left+(lineSpacing*(q+1)), top+RECT_HEIGHT);
 					context.stroke();
@@ -150,6 +166,7 @@ function setupBoundaries(btree){
 	/* Takes all nodes and sets children */ 
 	setAllChildren(btree);
 	drawChildrenLines(btree);
+	btree.treeBuilt = true;
 }
 
 /*
@@ -256,9 +273,7 @@ function scaleTree(btree){
 		Everything has to be redrawn
 	*/
 
-	context.rect(0,0,canvas.width, canvas.height);
-	context.fillStyle = "#ecf0f1";
-	context.fill();
+	clearCanvas();
 
 	/* Get the height of the btree tree */
 	var treeHeight = btree.height;
@@ -268,8 +283,6 @@ function scaleTree(btree){
 	var SITE_HEIGHT = window.innerHeight;
 	/* The width of the node in respect to the SITE_WIDTH */
 	var RECT_WIDTH_PERCENT = (box1.box_x - box1.x)/5;
-	// var RECT_WIDTH_PERCENT = 8;
-
 	/* Every RECT's size is a percent of the SITE_WIDTH */
 	var RECT_WIDTH = SITE_WIDTH * (RECT_WIDTH_PERCENT/100);
 	/* RECT's height is a third of its width */
@@ -402,7 +415,24 @@ function scaleTree(btree){
 
 }
 
+/* Clears the entire canvas and fills the canvas with a solid color*/
+function clearCanvas(){
+	/* Edit canvas name if your global variable is different */
+	/* Sick of passing in the canvas into this function */
+        context.rect(0,0,canvas.width, canvas.height);
+        context.fillStyle = "#ecf0f1";
+        context.fill();
+}
 
+/* 	
+	Set the width and height of the canvas
+	Uses the window height and width 
+*/
+function setCanvasDimensions(){
+        /* Set the canvas size */
+        context.canvas.width = window.innerWidth;
+        context.canvas.height = window.innerHeight;
+}
 
 
 

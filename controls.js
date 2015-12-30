@@ -49,7 +49,7 @@ controlBox.prototype.draw = function(){
    	context.fillStyle = "#ecf0f1";
     	context.fill();
 
-    /* Draw controls */
+    	/* Draw controls */
 
 	/* Draw line to determine range of values */
 	context.beginPath();

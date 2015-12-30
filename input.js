@@ -1,12 +1,8 @@
 function insertToBtree(div,btree){
-	console.log(div.value);
-
 	var stringInt = div.value;
 	var value = parseInt(stringInt,10);
 
-        context.rect(0,0,canvas.width, canvas.height);
-        context.fillStyle = "#ecf0f1";
-        context.fill();
+	clearCanvas();
 
 	btree.insert(value);
         btree.setupForDisplay();
