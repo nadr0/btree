@@ -11,7 +11,6 @@ function setupBoundaries(btree){
 	/* The width of the node in respect to the SITE_WIDTH */
 	/* 10 is decent */
 	/* 8 if need a taller tree */
-	// var RECT_WIDTH_PERCENT = 8;
 	var RECT_WIDTH_PERCENT = (box1.box_x - box1.x)/5;
 	/* Every RECT's size is a percent of the SITE_WIDTH */
 	var RECT_WIDTH = SITE_WIDTH * (RECT_WIDTH_PERCENT/100);
@@ -256,9 +255,7 @@ function scaleTree(btree){
 		Everything has to be redrawn
 	*/
 
-	context.rect(0,0,canvas.width, canvas.height);
-	context.fillStyle = "#ecf0f1";
-	context.fill();
+	clearCanvas();
 
 	/* Get the height of the btree tree */
 	var treeHeight = btree.height;
@@ -268,8 +265,6 @@ function scaleTree(btree){
 	var SITE_HEIGHT = window.innerHeight;
 	/* The width of the node in respect to the SITE_WIDTH */
 	var RECT_WIDTH_PERCENT = (box1.box_x - box1.x)/5;
-	// var RECT_WIDTH_PERCENT = 8;
-
 	/* Every RECT's size is a percent of the SITE_WIDTH */
 	var RECT_WIDTH = SITE_WIDTH * (RECT_WIDTH_PERCENT/100);
 	/* RECT's height is a third of its width */
@@ -402,7 +397,24 @@ function scaleTree(btree){
 
 }
 
+/* Clears the entire canvas and fills the canvas with a solid color*/
+function clearCanvas(){
+	/* Edit canvas name if your global variable is different */
+	/* Sick of passing in the canvas into this function */
+        context.rect(0,0,canvas.width, canvas.height);
+        context.fillStyle = "#ecf0f1";
+        context.fill();
+}
 
+/* 	
+	Set the width and height of the canvas
+	Uses the window height and width 
+*/
+function setCanvasDimensions(){
+        /* Set the canvas size */
+        context.canvas.width = window.innerWidth;
+        context.canvas.height = window.innerHeight;
+}
 
 
 
