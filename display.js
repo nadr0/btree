@@ -32,9 +32,8 @@ function setupBoundaries(btree){
 		/* For the current height level, calculate the horizontal spacing */
 		horizontalSpacing = SITE_WIDTH/(btree.NODE_STORAGE[i].length+1);
 		/* Create the rectangle*/
-		btree.RECT_STORAGE_DIVIDER[i] =  new rectangleBoundary(0,SITE_WIDTH,0,verticalSpacing*(i+1),horizontalSpacing,1);
+		btree.RECT_STORAGE_DIVIDER[i] =  new rectangleBoundary(0,SITE_WIDTH,0,verticalSpacing*(i+1),horizontalSpacing,1);	
 	};
-
 
 	/*
 		---------------------------------
@@ -84,10 +83,24 @@ function setupBoundaries(btree){
 
 			/* Pick a random index to get a color for the node */
 			var randomColorIndex = Math.floor((Math.random() * 8) + 1);
+			var nodeColorIndex;
+			if(btree.treeBuilt){
+				nodeColorIndex = btree.nodeColorLookUp[i][j];
+				if(typeof nodeColorIndex != "undefined"){
+					console.log(j + ": INDEX = " + nodeColorIndex + "; height = " + i);
+					/* Create the node, set the x,y, width height, and the color for fill and stroke */
+					current_rect = new rectangleBoundary(left,right,top,bottom,0,0, backgroundColors[nodeColorIndex], borderColors[nodeColorIndex]);
+				}else{
+					/* Create the node, set the x,y, width height, and the color for fill and stroke */
+					current_rect = new rectangleBoundary(left,right,top,bottom,0,0, backgroundColors[randomColorIndex], borderColors[randomColorIndex]);
+					btree.nodeColorLookUp[i].push(randomColorIndex);
+				}
+			}else{
+				/* Create the node, set the x,y, width height, and the color for fill and stroke */
+				current_rect = new rectangleBoundary(left,right,top,bottom,0,0, backgroundColors[randomColorIndex], borderColors[randomColorIndex]);
+				btree.nodeColorLookUp[i].push(randomColorIndex);
+			}
 
-			/* Create the node, set the x,y, width height, and the color for fill and stroke */
-			current_rect = new rectangleBoundary(left,right,top,bottom,0,0, backgroundColors[randomColorIndex], borderColors[randomColorIndex]);
-			
 			/* At this current height in the tree, the rectangle needs this rectangle that was created */
 			btree.RECT_STORAGE_DIVIDER[i].nodes.push(current_rect);
 
@@ -135,7 +148,11 @@ function setupBoundaries(btree){
 					context.beginPath();
 					/* Bar width for (m) elements in node */
 					context.lineWidth = 5;
-					context.strokeStyle = borderColors[randomColorIndex];
+					if(nodeColorIndex){
+						context.strokeStyle = borderColors[nodeColorIndex];
+					}else{
+						context.strokeStyle = borderColors[randomColorIndex];
+					}
 					context.moveTo(left+(lineSpacing*(q+1)), top);
 					context.lineTo(left+(lineSpacing*(q+1)), top+RECT_HEIGHT);
 					context.stroke();
@@ -149,6 +166,7 @@ function setupBoundaries(btree){
 	/* Takes all nodes and sets children */ 
 	setAllChildren(btree);
 	drawChildrenLines(btree);
+	btree.treeBuilt = true;
 }
 
 /*
