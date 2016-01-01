@@ -82,24 +82,12 @@ function setupBoundaries(btree){
 			bottom = RECT_HEIGHT;
 
 			/* Pick a random index to get a color for the node */
-			var randomColorIndex = Math.floor((Math.random() * 8) + 1);
-			var nodeColorIndex;
-			if(btree.treeBuilt){
-				nodeColorIndex = btree.nodeColorLookUp[i][j];
-				if(typeof nodeColorIndex != "undefined"){
-					console.log(j + ": INDEX = " + nodeColorIndex + "; height = " + i);
-					/* Create the node, set the x,y, width height, and the color for fill and stroke */
-					current_rect = new rectangleBoundary(left,right,top,bottom,0,0, backgroundColors[nodeColorIndex], borderColors[nodeColorIndex]);
-				}else{
-					/* Create the node, set the x,y, width height, and the color for fill and stroke */
-					current_rect = new rectangleBoundary(left,right,top,bottom,0,0, backgroundColors[randomColorIndex], borderColors[randomColorIndex]);
-					btree.nodeColorLookUp[i].push(randomColorIndex);
-				}
-			}else{
-				/* Create the node, set the x,y, width height, and the color for fill and stroke */
-				current_rect = new rectangleBoundary(left,right,top,bottom,0,0, backgroundColors[randomColorIndex], borderColors[randomColorIndex]);
-				btree.nodeColorLookUp[i].push(randomColorIndex);
-			}
+			// var randomColorIndex = Math.floor((Math.random() * 8) + 1);
+			var randomColorIndex = ((j+i) % backgroundColors.length);
+			if(randomColorIndex === 0){randomColorIndex++;}
+
+			current_rect = new rectangleBoundary(left,right,top,bottom,0,0, backgroundColors[randomColorIndex], borderColors[randomColorIndex]);
+
 
 			/* At this current height in the tree, the rectangle needs this rectangle that was created */
 			btree.RECT_STORAGE_DIVIDER[i].nodes.push(current_rect);
@@ -147,12 +135,8 @@ function setupBoundaries(btree){
 				if(q + 1 < btree.t * 2 - 1){
 					context.beginPath();
 					/* Bar width for (m) elements in node */
-					context.lineWidth = 5;
-					if(nodeColorIndex){
-						context.strokeStyle = borderColors[nodeColorIndex];
-					}else{
-						context.strokeStyle = borderColors[randomColorIndex];
-					}
+					context.lineWidth = 5;			
+					context.strokeStyle = borderColors[randomColorIndex];
 					context.moveTo(left+(lineSpacing*(q+1)), top);
 					context.lineTo(left+(lineSpacing*(q+1)), top+RECT_HEIGHT);
 					context.stroke();
