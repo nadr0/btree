@@ -33,10 +33,6 @@ function B_TREE(t){
 
 	this.RECT_STORAGE_DIVIDER = null;
 
-	this.treeBuilt = false;
-
-	this.nodeColorLookUp = null;
-
 }
 
 /* 
@@ -47,18 +43,13 @@ B_TREE.prototype.setupForDisplay = function(){
 	/* Create slots for each height */
 	this.NODE_STORAGE = new Array(this.height);
 	this.RECT_STORAGE_DIVIDER = new Array(this.height);
-	if(!this.treeBuilt){
-		this.nodeColorLookUp = new Array(this.height);
-	}
 
 	for (var i = 0; i < this.height; i++) {
 		/* 	Size of 1 just for some space 
 			Array.push will auto increase the size
 		*/
 		this.NODE_STORAGE[i] = [];
-		if(!this.treeBuilt){
-			this.nodeColorLookUp[i] = [];
-		}
+	
 	};
 
 }
