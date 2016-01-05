@@ -33,6 +33,8 @@ function B_TREE(t){
 
 	this.RECT_STORAGE_DIVIDER = null;
 
+	/* Percent for the scale on the webpage */
+	this.percent = 8;
 }
 
 /* 

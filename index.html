@@ -86,8 +86,6 @@
         /* Store the control boxes to update */
         var controlBoxes = [];
 
-        var box1 = new controlBox(50,50,25,"Scale Tree");
-
         function draw(e){
             mousePos = getMousePos(canvas, e);
         }
@@ -106,7 +104,6 @@
         setupBoundaries(btree);
 
         function animate(){
-            box1.update();
             window.requestAnimationFrame(animate);
         }
 
