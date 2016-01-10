@@ -11,7 +11,7 @@ function setupBoundaries(btree){
 	/* The width of the node in respect to the SITE_WIDTH */
 	/* 10 is decent */
 	/* 8 if need a taller tree */
-	var RECT_WIDTH_PERCENT = (box1.box_x - box1.x)/5;
+	var RECT_WIDTH_PERCENT = btree.percent;
 	/* Every RECT's size is a percent of the SITE_WIDTH */
 	var RECT_WIDTH = SITE_WIDTH * (RECT_WIDTH_PERCENT/100);
 	/* RECT's height is a third of its width */
@@ -24,7 +24,7 @@ function setupBoundaries(btree){
 
 	/*
 		Spacing between each node when drawn 
-	*/
+	*/9
 	var horizontalSpacing = 0;
 
 	/* Create the height boundaries of the tree */
@@ -266,7 +266,7 @@ function scaleTree(btree){
 	var SITE_WIDTH = window.innerWidth;
 	var SITE_HEIGHT = window.innerHeight;
 	/* The width of the node in respect to the SITE_WIDTH */
-	var RECT_WIDTH_PERCENT = (box1.box_x - box1.x)/5;
+	var RECT_WIDTH_PERCENT = btree.percent;
 	/* Every RECT's size is a percent of the SITE_WIDTH */
 	var RECT_WIDTH = SITE_WIDTH * (RECT_WIDTH_PERCENT/100);
 	/* RECT's height is a third of its width */

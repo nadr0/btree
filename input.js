@@ -36,3 +36,24 @@ function keyBoardInit(event,btree){
 		}
 	},false);
 }
+
+function scaleDownTree(btree){
+	btree.percent--;
+	if(btree.percent <= 0){
+		btree.percent = 1;
+	}
+
+	btree.update();
+	btree.update();
+}
+
+
+function scaleUptree(btree){
+	btree.percent++;
+	if(btree.percent > 100){
+		btree.percent = 100;
+	}
+
+	btree.update();
+	btree.update();
+}
