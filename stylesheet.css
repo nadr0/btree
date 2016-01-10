@@ -4,7 +4,7 @@
 	top: 35px;
 	left: 35px;
 	background-color: rgba(0, 0, 0, 0.125);
-	height: 280px;
+	height: 375px;
 	width: 175px;
 	z-index:  1;
 	display: inline-block;
@@ -33,12 +33,24 @@
 	border-bottom: solid 2px #27ae60;
 }
 .buttonUI:hover{
-	box-shadow: 0 0 5px 1px #969696;
-	border-bottom:  solid 2px  rgba(0, 0, 0, 0.0);
+	border-bottom:  solid 3px  #27ae60;	
 }
 .buttonUI:active{
-	background: #2ecc71;
+	background-color: #e67e22;
+	border-bottom:  solid 3px  #d35400;
 }
+.buttonScale{
+	background-color: #1abc9c;
+	border-bottom: solid 2px #16a085;
+}
+.buttonScale:hover{
+	border-bottom:  solid 3px  #16a085;
+}
+.buttonScale:active{
+	background-color: #f1c40f;
+	border-bottom:  solid 3px  #f39c12;	
+}
+
 .insertField{
 	display: inline-block;
 	border-radius: 5px;
