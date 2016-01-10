@@ -4,12 +4,18 @@
 	top: 35px;
 	left: 35px;
 	background-color: rgba(0, 0, 0, 0.125);
-	height: 375px;
+	height: 205px;
 	width: 175px;
 	z-index:  1;
 	display: inline-block;
 	/*border: 2px #34495e solid;*/
 	border-radius: 5px;
+}
+.buttonInsert:after{
+	content: "+";
+	font-family: "Source Code Pro";
+	font-size: 25px;
+	color: white;
 }
 .buttonAndField{
 	position: relative;
