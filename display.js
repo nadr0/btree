@@ -24,7 +24,7 @@ function setupBoundaries(btree){
 
 	/*
 		Spacing between each node when drawn 
-	*/
+	*/9
 	var horizontalSpacing = 0;
 
 	/* Create the height boundaries of the tree */
