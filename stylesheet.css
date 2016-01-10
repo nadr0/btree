@@ -50,6 +50,16 @@
 	background-color: #f1c40f;
 	border-bottom:  solid 3px  #f39c12;	
 }
+#scaleDown:after{
+	font-family: 'Source Code Pro';
+	font-size: 15px;
+	content: "<";
+}
+#scaleUp:after{
+	font-family: 'Source Code Pro';
+	font-size: 15px;
+	content: ">";
+}
 
 .insertField{
 	display: inline-block;
